@@ -12,51 +12,37 @@ class _Home extends State<Home> {
   @override
   void initState() {
     happinessList.add(Happiness(
-        title: "title", content: "content", happiness: 30, date: '2022-07-19'));
+        title: "title", content: "content", happinessIndex: 30, date: '2022-07-19'));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('홈 화면'),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: Container(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/happinessList');
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.65,
-                  width: MediaQuery.of(context).size.width,
-                  // color: Colors.green,
-                  child: const Align(
-                    alignment: Alignment.center,
-                    child: FlutterLogo(
-                      size: 100,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.15,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(30),
-                // color: Colors.yellow,
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/write');
-                    },
-                    child: Icon(Icons.edit),
-                  ),
-                ),
-              ),
-            ]),
+      body: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed('/happinessList');
+        },
+        child: const Align(
+          alignment: Alignment.center,
+          heightFactor: 5,
+          child: FlutterLogo(
+            size: 100,
+          ),
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 30, 100),
+        child: FloatingActionButton(
+          child: const Icon(Icons.text_fields),
+          onPressed: () {
+            Navigator.of(context).pushNamed('/write');
+          },
+        ),
       ),
     );
   }
