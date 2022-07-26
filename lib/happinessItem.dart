@@ -7,9 +7,9 @@ class Happiness {
   String date;
 
   Happiness(
-      {this.title,
-       this.content,
-       this.happinessIndex,
+      {required this.title,
+        required this.content,
+        required this.happinessIndex,
         required this.date});
 
   @override
