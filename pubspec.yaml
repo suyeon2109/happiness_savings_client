@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.17.0
   syncfusion_flutter_gauges: ^20.2.39
+  image_picker: ^0.8.5+3
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_test:

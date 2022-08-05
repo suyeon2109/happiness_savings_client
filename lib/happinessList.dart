@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'happinessItem.dart';
 
 class HappinessList extends StatefulWidget {
@@ -12,7 +13,11 @@ class _HappinessList extends State<HappinessList> {
   @override
   void initState() {
     happinessList.add(Happiness(
-        title: "title", content: "content", happinessIndex: 30, date: '2022-07-19'));
+        title: "title",
+        content: "content",
+        happinessIndex: 30,
+        date: '2022-07-19',
+        imagePath: 'imagePath'));
   }
 
   @override
