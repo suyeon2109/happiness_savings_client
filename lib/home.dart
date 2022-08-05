@@ -1,7 +1,9 @@
+import 'dart:math' as math;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:vector_math/vector_math.dart' as vector;
+
 import 'constants.dart';
 
 class Home extends StatefulWidget {
