@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:happiness_savings_client/raindrop/animation_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -54,7 +55,7 @@ class _Write extends State<Write> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 upload(happiness);
-                Navigator.of(context).pop();
+                Navigator.of(context).pushNamedAndRemoveUntil('/', ModalRoute.withName('/'));
               }
             },
           ),
