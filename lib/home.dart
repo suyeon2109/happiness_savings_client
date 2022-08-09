@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:happiness_savings_client/raindrop/animation_screen.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 
 import 'constants.dart';
@@ -34,71 +35,76 @@ class _Home extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-        body: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pushNamed('/happinessList');
-          },
-          child: AnimatedBuilder(
-            animation: animationController,
-            builder: (context, child) => Stack(
-              children: [
-                Positioned(
-                  top: size.height / 2,
-                  left: size.width / 2,
-                  child: ClipPath(
-                    clipper: CircleClipper(),
-                    child: CustomPaint(
-                      size: kSize,
-                      painter: WavePainter(
-                          animationController: animationController,
-                          isRightDirection: true),
+    return Stack(children: <Widget>[
+      Scaffold(
+          body: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/happinessList');
+            },
+            child: AnimatedBuilder(
+              animation: animationController,
+              builder: (context, child) => Stack(
+                children: [
+                  Positioned(
+                    top: size.height / 2,
+                    left: size.width / 2,
+                    child: ClipPath(
+                      clipper: CircleClipper(),
+                      child: CustomPaint(
+                        size: kSize,
+                        painter: WavePainter(
+                            animationController: animationController,
+                            isRightDirection: true),
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: size.height / 2,
-                  left: size.width / 2,
-                  child: ClipPath(
-                    clipper: CircleClipper(),
-                    child: CustomPaint(
-                      size: kSize,
-                      painter: WavePainter(
-                          animationController: animationController,
-                          isRightDirection: false),
+                  Positioned(
+                    top: size.height / 2,
+                    left: size.width / 2,
+                    child: ClipPath(
+                      clipper: CircleClipper(),
+                      child: CustomPaint(
+                        size: kSize,
+                        painter: WavePainter(
+                            animationController: animationController,
+                            isRightDirection: false),
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: size.height / 2,
-                  left: size.width / 2,
-                  child: CustomPaint(
-                    size: kSize,
-                    painter: FlaskPainter(),
+                  Positioned(
+                    top: size.height / 2,
+                    left: size.width / 2,
+                    child: CustomPaint(
+                      size: kSize,
+                      painter: FlaskPainter(),
+                    ),
                   ),
-                ),
-                Positioned(
-                  top: size.height / 2,
-                  left: size.width / 2,
-                  child: CustomPaint(
-                    size: kSize,
-                    painter: ReflectionPainter(),
+                  Positioned(
+                    top: size.height / 2,
+                    left: size.width / 2,
+                    child: CustomPaint(
+                      size: kSize,
+                      painter: ReflectionPainter(),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 30, 100),
-          child: FloatingActionButton(
-            child: const Icon(Icons.text_fields),
-            onPressed: () {
-              Navigator.of(context).pushNamed('/write');
-            },
-          ),
-        )
-    );
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 30, 100),
+            child: FloatingActionButton(
+              backgroundColor: Color(0xFFF1BCB6),
+              child: const Icon(Icons.text_fields),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/write');
+              },
+            ),
+          )),
+      IgnorePointer(
+          child:
+              AnimationScreen(color: Theme.of(context).colorScheme.secondary))
+    ]);
   }
 }
 
