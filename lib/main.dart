@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_savings_client/home.dart';
-
 import 'home.dart';
-import 'happinessList.dart';
-import 'viewDetail.dart';
 import 'write.dart';
+import 'viewDetail.dart';
+import 'happinessList.dart';
 
 void main() {
   runApp(const MyApp());

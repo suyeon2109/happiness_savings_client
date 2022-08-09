@@ -103,7 +103,7 @@ class _Home extends State<Home> with TickerProviderStateMixin {
           )),
       IgnorePointer(
           child:
-              AnimationScreen(color: Theme.of(context).colorScheme.secondary))
+          AnimationScreen(color: Theme.of(context).colorScheme.secondary))
     ]);
   }
 }
@@ -116,7 +116,7 @@ class ReflectionPainter extends CustomPainter {
 
     var paint = Paint()
       ..colorFilter =
-          ColorFilter.mode(Colors.white.withOpacity(0.1), BlendMode.softLight)
+      ColorFilter.mode(Colors.white.withOpacity(0.1), BlendMode.softLight)
       ..strokeJoin = StrokeJoin.round
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
@@ -204,13 +204,13 @@ class WavePainter extends CustomPainter {
           i.toDouble(),
           isRightDirection
               ? math.sin(vector.radians(i.toDouble() * 360 / kWaveLength) -
-                          vector.radians(animationController.value)) *
-                      20 -
-                  25
+              vector.radians(animationController.value)) *
+              20 -
+              25
               : math.sin(vector.radians(i.toDouble() * 360 / kWaveLength) +
-                          vector.radians(animationController.value)) *
-                      20 -
-                  20));
+              vector.radians(animationController.value)) *
+              20 -
+              20));
     }
 
     final Gradient gradient = LinearGradient(
