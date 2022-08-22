@@ -8,14 +8,14 @@ class AnimationScreen extends StatefulWidget {
   });
 
   final Color color;
-  final _AnimationScreenState _animationScreenState = _AnimationScreenState();
-
-  void play(){
-    this._animationScreenState.play();
-  }
+  // final _AnimationScreenState _animationScreenState = _AnimationScreenState();
+  //
+  // void play(){
+  //   this._animationScreenState.play();
+  // }
 
   @override
-  _AnimationScreenState createState() => _animationScreenState;
+  _AnimationScreenState createState() => _AnimationScreenState();
 
 
 }
@@ -28,10 +28,6 @@ class _AnimationScreenState extends State<AnimationScreen> with SingleTickerProv
   @override
   void initState() {
     super.initState();
-    play();
-  }
-
-  void play(){
     _controller = AnimationController(
       duration: const Duration(milliseconds: 3000),
       vsync: this,

@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'flChart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'home.dart';
+import 'mood_graph.dart';
 import 'write.dart';
 import 'viewDetail.dart';
 import 'happinessList.dart';
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
         '/write': (context) => Write(),
         '/viewDetail': (context) => ViewDetail(),
         '/happinessList' : (context) => HappinessList(),
+        '/moodGraph' : (context) => FlChart(),
+        // '/moodGraph' : (context) => MoodGraph(),
       },
     );
   }

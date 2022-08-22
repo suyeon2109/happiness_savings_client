@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:cron/cron.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_savings_client/raindrop/animation_screen.dart';
@@ -15,6 +16,7 @@ class Home extends StatefulWidget {
 class _Home extends State<Home> with TickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> animation;
+  bool isVisible = true;
 
   @override
   void initState() {
@@ -30,16 +32,30 @@ class _Home extends State<Home> with TickerProviderStateMixin {
       curve: Curves.ease,
     );
     animationController.repeat();
+    // scheduleTask();
+    final now = DateTime.now().month;
+    isVisible= (now==1);
   }
+
+  // scheduleTask(){
+  //   final cron = Cron();
+  //   cron.schedule(Schedule.parse('* 14 10 8 0-6'), () async {
+  //     setState((){
+  //       isVisible = true;
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+
     return Stack(children: <Widget>[
       Scaffold(
           body: GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed('/happinessList');
+              Navigator.of(context).pushNamed('/moodGraph');
             },
             child: AnimatedBuilder(
               animation: animationController,
@@ -91,15 +107,36 @@ class _Home extends State<Home> with TickerProviderStateMixin {
               ),
             ),
           ),
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 30, 100),
-            child: FloatingActionButton(
-              backgroundColor: Color(0xFFF1BCB6),
-              child: const Icon(Icons.text_fields),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/write');
-              },
-            ),
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 20, 20),
+                child: FloatingActionButton(
+                  heroTag: "write",
+                  backgroundColor: Color(0xFFF1BCB6),
+                  child: const Icon(Icons.text_fields),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/write');
+                  },
+                ),
+              ),
+              false ? Padding(padding: const EdgeInsets.fromLTRB(0, 0, 20, 80),)
+                  : Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 20, 80),
+                child: Visibility(
+                  visible: isVisible,
+                  child: FloatingActionButton(
+                    heroTag: "view List",
+                    backgroundColor: Color(0xFFF1BCB6),
+                    child: const Icon(Icons.list_alt),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/happinessList');
+                    },
+                  ),
+                ),
+              )
+            ],
           )),
       IgnorePointer(
           child:
