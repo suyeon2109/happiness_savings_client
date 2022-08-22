@@ -30,7 +30,7 @@ class _Write extends State<Write> {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    var date = DateFormat('yyyy-MM-dd').add_jm().format(now);
+    var date = DateFormat('yyyy-MM-dd').add_Hms().format(now);
     var happiness = Happiness(
         date: date,
         title: _title.text,
@@ -106,7 +106,7 @@ class _Write extends State<Write> {
             ? Colors.blue[300]
             : _happinessIndex < 50
                 ? Colors.red[200]
-                : Colors.red[400];
+                : Colors.red[300];
 
     return SfLinearGauge(
       maximum: 100.0,
@@ -216,6 +216,7 @@ class _Write extends State<Write> {
           child: FloatingActionButton(
             heroTag: "cameraBtn",
             tooltip: 'camera',
+            backgroundColor: Colors.blue.shade300,
             onPressed: () {
               getImage(ImageSource.camera);
             },
@@ -233,6 +234,7 @@ class _Write extends State<Write> {
           child: FloatingActionButton(
             heroTag: "imgBtn",
             tooltip: 'pick Image',
+            backgroundColor: Colors.blue.shade300,
             onPressed: () {
               getImage(ImageSource.gallery);
             },
