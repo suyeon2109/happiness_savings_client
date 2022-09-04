@@ -2,18 +2,19 @@ class Happiness {
   String? title;
   String? content;
   int? happinessIndex;
-  String date;
+  String? createdAt;
+  String? updatedAt;
   String? imagePath;
 
   Happiness(
       {required this.title,
         required this.content,
         required this.happinessIndex,
-        required this.date,
+        this.createdAt,
         this.imagePath});
 
   @override
   String toString() {
-    return 'Happiness{title: $title, content: $content, happinessIndex: $happinessIndex, date: $date, imagePath: $imagePath}';
+    return 'Happiness{title: $title, content: $content, happinessIndex: $happinessIndex, imagePath: $imagePath}';
   }
 }

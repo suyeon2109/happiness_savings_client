@@ -16,7 +16,7 @@ class _HappinessList extends State<HappinessList> {
         title: "title",
         content: "content",
         happinessIndex: 30,
-        date: '2022-07-19',
+        createdAt: '2022-07-19',
         imagePath: 'imagePath'));
   }
 
@@ -24,43 +24,65 @@ class _HappinessList extends State<HappinessList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('적금 리스트 화면'),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: const Text('적금 내역',
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       ),
       body: Container(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.7,
                 width: MediaQuery.of(context).size.width,
                 // color: Colors.red,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return Card(
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return Card(
                         child: InkWell(
-                          child: Row(children: <Widget>[
-                            Text(happinessList[index].title!,
-                                style: TextStyle(fontSize: 30)),
-                            Text(happinessList[index].happinessIndex.toString(),
-                                style: TextStyle(fontSize: 30)),
-                            Text(happinessList[index].date,
-                                style: TextStyle(fontSize: 30))
-                          ]),
+                          child: _tile(
+                              Icons.account_circle,
+                              happinessList[index].title!,
+                              happinessList[index].happinessIndex!,
+                              happinessList[index].createdAt!),
                           onTap: () {
                             Navigator.of(context).pushNamed('/viewDetail',
                                 arguments: happinessList[index]);
                           },
-                        ),
-                      );
-                    },
-                    itemCount: happinessList.length,
-                  ),
+                        )
+                    );
+                  },
+                  itemCount: happinessList.length,
                 ),
               ),
             ]),
       ),
     );
   }
+
+  ListTile _tile(
+          IconData icon, String title, int happinessIndex, String createdAt) =>
+      ListTile(
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 20,
+          ),
+        ),
+        subtitle: Text(happinessIndex.toString()),
+        leading: Icon(
+          icon,
+          color: Colors.blue[500],
+        ),
+        trailing: Text(
+          createdAt,
+          style: const TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 15,
+          ),
+        ),
+      );
 }

@@ -10,7 +10,11 @@ class _ViewDetail extends State<ViewDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('내용 디테일 화면'),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: const Text('내용 디테일 화면',
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       ),
     );
   }

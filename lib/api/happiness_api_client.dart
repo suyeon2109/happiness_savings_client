@@ -10,14 +10,14 @@ class HappinessApiClient {
 
   final String _host = "52.79.226.73:8080";
 
-  Future<String> signup() async {
+  Future<String> signUp() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     String memberUuid = sharedPreferences.getString('uuid')!;
     return http
         .post(
-          Uri.http(_host, '/members/signup'),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode({'uuid': memberUuid}),
+          Uri.http(_host, '/members/signUp'),
+          // headers: {'Content-Type': 'application/json'},
+          body: {'uuid':memberUuid},
         )
         .then((value) => value.body);
   }

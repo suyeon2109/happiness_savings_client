@@ -34,7 +34,7 @@ class _Home extends State<Home> with TickerProviderStateMixin {
     animationController.repeat();
     // scheduleTask();
     final now = DateTime.now().month;
-    isVisible= (now==1);
+    isVisible= (now==9);
   }
 
   // scheduleTask(){

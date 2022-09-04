@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'api/happiness_api_client.dart';
 import 'flChart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -48,5 +49,13 @@ Future<String> resolveUuid() async {
 
   final uuid = const Uuid().v1();
   sharedPreferences.setString('uuid', uuid);
+
+  const api = HappinessApiClient();
+  final apiResponse = await api.signUp();
+
+  if (kDebugMode) {
+    print('apiResponse: $apiResponse');
+  }
+
   return uuid;
 }
