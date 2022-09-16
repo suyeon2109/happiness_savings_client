@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:happiness_savings_client/kakaoLogin.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'api/happiness_api_client.dart';
 import 'flChart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -10,11 +13,12 @@ import 'viewDetail.dart';
 import 'happinessList.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final uuid = await resolveUuid();
-  if (kDebugMode) {
-    print('uuid: $uuid');
-  }
+  // WidgetsFlutterBinding.ensureInitialized();
+  // final uuid = await resolveUuid();
+  // if (kDebugMode) {
+  //   print('uuid: $uuid');
+  // }
+  KakaoSdk.init(nativeAppKey: 'b6c119301f971dcc8fa9a2c13584ef7f');
   runApp(const MyApp());
 }
 
@@ -27,7 +31,8 @@ class MyApp extends StatelessWidget {
       title: 'main page',
       initialRoute: '/',
       routes: {
-        '/': (context) => Home(),
+        '/': (context) => KaKaoLogin(),
+        '/home': (context) => Home(),
         '/write': (context) => Write(),
         '/viewDetail': (context) => ViewDetail(),
         '/happinessList' : (context) => HappinessList(),
@@ -48,5 +53,13 @@ Future<String> resolveUuid() async {
 
   final uuid = const Uuid().v1();
   sharedPreferences.setString('uuid', uuid);
+
+  const api = HappinessApiClient();
+  final apiResponse = await api.signUp();
+
+  if (kDebugMode) {
+    print('apiResponse: $apiResponse');
+  }
+
   return uuid;
 }

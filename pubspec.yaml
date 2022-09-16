@@ -43,6 +43,8 @@ dependencies:
   shared_preferences: ^2.0.15
   uuid: ^3.0.6
   http: ^0.13.5
+  kakao_flutter_sdk_user:
+  kakao_flutter_sdk: ^1.2.2
 
 dev_dependencies:
   flutter_test:

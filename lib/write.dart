@@ -29,10 +29,7 @@ class _Write extends State<Write> {
 
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now();
-    var date = DateFormat('yyyy-MM-dd').add_Hms().format(now);
     var happiness = Happiness(
-        date: date,
         title: _title.text,
         content: _content.text,
         happinessIndex: _happinessIndex.toInt(),
@@ -92,6 +89,7 @@ class _Write extends State<Write> {
         Icon(
           Icons.shield_moon,
           size: 20,
+          color: Colors.brown,
         ),
         SizedBox(width: 5),
         Text('행복지수', style: TextStyle(fontSize: 18))
