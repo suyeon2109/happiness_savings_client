@@ -43,7 +43,7 @@ class _HappinessList extends State<HappinessList> {
                     return Card(
                         child: InkWell(
                           child: _tile(
-                              Icons.account_circle,
+                              Icons.image,
                               happinessList[index].title!,
                               happinessList[index].happinessIndex!,
                               happinessList[index].createdAt!),
