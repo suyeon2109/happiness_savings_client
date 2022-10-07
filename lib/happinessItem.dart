@@ -6,10 +6,11 @@ class Happiness {
   String? updatedAt;
   String? imagePath;
 
+
   Happiness(
-      {required this.title,
-        required this.content,
-        required this.happinessIndex,
+      {this.title,
+        this.content,
+        this.happinessIndex,
         this.createdAt,
         this.imagePath});
 

@@ -23,9 +23,9 @@ class _KaKaoLogin extends State<KaKaoLogin> {
 
   isLoggedIn() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    var savedUuid = sharedPreferences.getString('uuid');
+    var userId = sharedPreferences.getString('userId');
 
-    if(savedUuid != null){
+    if(userId != null){
       Navigator.of(context).pushNamed('/home');
     } else {
       _initKaKaoTalkInstalled();
@@ -46,10 +46,10 @@ class _KaKaoLogin extends State<KaKaoLogin> {
       await AuthCodeClient.instance.request());
       print("authCode : " + authCode);
 
-      // var token = await AuthApi.instance.issueAccessToken(authCode: authCode);
-      // var tokenManager = DefaultTokenManager();
-      // print("token : " + token.toString());
-      // tokenManager.setToken(token);
+      var token = await AuthApi.instance.issueAccessToken(authCode: authCode);
+      var tokenManager = DefaultTokenManager();
+      print("token : " + token.toString());
+      tokenManager.setToken(token);
 
       User user = await UserApi.instance.me();
 
@@ -57,10 +57,11 @@ class _KaKaoLogin extends State<KaKaoLogin> {
           '\n회원번호: ${user.id}');
 
       final sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.setString('uuid', '${user.id}');
+      sharedPreferences.setString('userId', '${user.id}');
+      sharedPreferences.setString('loginType', 'KAKAO');
 
       const api = HappinessApiClient();
-      final apiResponse = await api.signUp();
+      final apiResponse = await api.login();
 
       if (kDebugMode) {
         print('apiResponse: $apiResponse');

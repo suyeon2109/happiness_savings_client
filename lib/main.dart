@@ -13,11 +13,10 @@ import 'viewDetail.dart';
 import 'happinessList.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // final uuid = await resolveUuid();
-  // if (kDebugMode) {
-  //   print('uuid: $uuid');
-  // }
+  WidgetsFlutterBinding.ensureInitialized();
+  // final sharedPreferences = await SharedPreferences.getInstance();
+  // sharedPreferences.remove("uuid");
+
   KakaoSdk.init(nativeAppKey: 'b6c119301f971dcc8fa9a2c13584ef7f');
   runApp(const MyApp());
 }
@@ -43,23 +42,23 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future<String> resolveUuid() async {
-  final sharedPreferences = await SharedPreferences.getInstance();
-
-  var savedUuid = sharedPreferences.getString('uuid');
-  if (savedUuid != null) {
-    return savedUuid;
-  }
-
-  final uuid = const Uuid().v1();
-  sharedPreferences.setString('uuid', uuid);
-
-  const api = HappinessApiClient();
-  final apiResponse = await api.signUp();
-
-  if (kDebugMode) {
-    print('apiResponse: $apiResponse');
-  }
-
-  return uuid;
-}
+// Future<String> resolveUuid() async {
+//   final sharedPreferences = await SharedPreferences.getInstance();
+//
+//   var savedUuid = sharedPreferences.getString('uuid');
+//   if (savedUuid != null) {
+//     return savedUuid;
+//   }
+//
+//   final uuid = const Uuid().v1();
+//   sharedPreferences.setString('uuid', uuid);
+//
+//   const api = HappinessApiClient();
+//   final apiResponse = await api.signUp();
+//
+//   if (kDebugMode) {
+//     print('apiResponse: $apiResponse');
+//   }
+//
+//   return uuid;
+// }

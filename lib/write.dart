@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import 'api/happiness_api_client.dart';
 import 'happinessItem.dart';
 
 class Write extends StatefulWidget {
@@ -306,8 +307,11 @@ class _Write extends State<Write> {
     );
   }
 
-  void upload(happiness) {
+  Future<void> upload(happiness) async {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(happiness.toString())));
+
+    const api = HappinessApiClient();
+    final apiResponse = await api.write(_title.text, _content.text, _happinessIndex.toInt());
   }
 }

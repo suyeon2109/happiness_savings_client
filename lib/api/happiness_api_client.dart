@@ -10,16 +10,17 @@ class HappinessApiClient {
 
   final String _host = "52.79.226.73:8080";
 
-  Future<String> signUp() async {
+  Future<String> login() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    String memberUuid = sharedPreferences.getString('uuid')!;
+    String userId = sharedPreferences.getString('userId')!;
+    String loginType = sharedPreferences.getString('loginType')!;
     return http
         .post(
-          Uri.http(_host, '/members/signUp'),
+          Uri.http(_host, '/members/login'),
           // headers: {'Content-Type': 'application/json'},
-          body: {'uuid':memberUuid},
+          body: {'idProviderType':userId, "idProviderUserId":loginType},
         )
-        .then((value) => value.body);
+        .then((value) => value.body.toString());
   }
 
   Future<int> write(
@@ -28,12 +29,12 @@ class HappinessApiClient {
     int happinessIndex,
   ) async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    String memberUuid = sharedPreferences.getString('uuid')!;
+    String userId = sharedPreferences.getString('userId')!;
     final happinessRequest =
-        HappinessRequest(title, content, happinessIndex, memberUuid);
+        HappinessRequest(title, content, happinessIndex, userId);
     return http
         .post(
-          Uri.http(_host, '/members/$memberUuid/happiness/write'),
+          Uri.http(_host, '/members/$userId/happiness/write'),
           headers: {'Content-Type': 'application/json'},
           body: json.encode(happinessRequest.toMap()),
         )
@@ -44,18 +45,18 @@ class HappinessApiClient {
     int happinessId,
   ) async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    String memberUuid = sharedPreferences.getString('uuid')!;
+    String userId = sharedPreferences.getString('userId')!;
     return http
-        .get(Uri.http(_host, '/members/$memberUuid/happiness/findOne'))
+        .get(Uri.http(_host, '/members/$userId/happiness/findOne'))
         .then((value) => json.decode(value.body))
         .then((value) => HappinessResponse.fromJson(value));
   }
 
   Future<List<HappinessResponse>> findAll() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    String memberUuid = sharedPreferences.getString('uuid')!;
+    String userId = sharedPreferences.getString('userId')!;
     return http
-        .get(Uri.http(_host, '/members/$memberUuid/happiness/findOne'))
+        .get(Uri.http(_host, '/members/$userId/happiness/findOne'))
         .then((value) => json.decode(value.body))
         .then((value) =>
             (value as List).map((e) => HappinessResponse.fromJson(e)).toList());
@@ -65,9 +66,9 @@ class HappinessApiClient {
     String title,
   ) async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    String memberUuid = sharedPreferences.getString('uuid')!;
+    String userId = sharedPreferences.getString('userId')!;
     return http
-        .get(Uri.http(_host, '/members/$memberUuid/happiness/findByTitle'))
+        .get(Uri.http(_host, '/members/$userId/happiness/findByTitle'))
         .then((value) => json.decode(value.body))
         .then((value) =>
             (value as List).map((e) => HappinessResponse.fromJson(e)).toList());
@@ -75,9 +76,9 @@ class HappinessApiClient {
 
   Future<int> count() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    String memberUuid = sharedPreferences.getString('uuid')!;
+    String userId = sharedPreferences.getString('uuid')!;
     return http
-        .get(Uri.http(_host, '/members/$memberUuid/happiness/count'))
+        .get(Uri.http(_host, '/members/$userId/happiness/count'))
         .then((value) => int.parse(value.body));
   }
 }
