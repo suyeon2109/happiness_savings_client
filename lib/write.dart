@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_savings_client/raindrop/animation_screen.dart';
 import 'package:image_picker/image_picker.dart';
@@ -312,6 +313,7 @@ class _Write extends State<Write> {
         .showSnackBar(SnackBar(content: Text(happiness.toString())));
 
     const api = HappinessApiClient();
-    final apiResponse = await api.write(_title.text, _content.text, _happinessIndex.toInt());
+    MultipartFile imgFile = await MultipartFile.fromFile(_imgPath);
+    final apiResponse = await api.write(_title.text, _content.text, _happinessIndex.toInt(), imgFile);
   }
 }

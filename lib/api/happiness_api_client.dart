@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:html';
 
+import 'package:dio/src/multipart_file.dart';
 import 'package:happiness_savings_client/api/happiness_request.dart';
 import 'package:happiness_savings_client/api/happiness_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/dio.dart';
 
 class HappinessApiClient {
   const HappinessApiClient();
@@ -27,16 +30,18 @@ class HappinessApiClient {
     String title,
     String content,
     int happinessIndex,
+    MultipartFile imgFile,
   ) async {
     final sharedPreferences = await SharedPreferences.getInstance();
     String userId = sharedPreferences.getString('userId')!;
     final happinessRequest =
-        HappinessRequest(title, content, happinessIndex, userId);
+        HappinessRequest(title, content, happinessIndex, userId, imgFile);
+    var formData = FormData.fromMap(happinessRequest.toMap());
     return http
         .post(
           Uri.http(_host, '/members/$userId/happiness/write'),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode(happinessRequest.toMap()),
+          headers: {'Content-Type': 'multipart/form-data'},
+          body: formData,
         )
         .then((value) => json.decode(value.body));
   }
