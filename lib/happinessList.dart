@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'api/happiness_api_client.dart';
+import 'api/happiness_response.dart';
 import 'happinessItem.dart';
 
 class HappinessList extends StatefulWidget {
@@ -8,16 +11,29 @@ class HappinessList extends StatefulWidget {
 }
 
 class _HappinessList extends State<HappinessList> {
-  List<Happiness> happinessList = new List.empty(growable: true);
+  final happinessList = [];
 
   @override
   void initState() {
-    happinessList.add(Happiness(
-        title: "title",
-        content: "content",
-        happinessIndex: 30,
-        createdAt: '2022-07-19',
-        imagePath: 'imagePath'));
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _asyncFindAll();
+    });
+
+    // happinessList.add(Happiness(
+    //     title: "title",
+    //     content: "content",
+    //     happinessIndex: 30,
+    //     createdAt: '2022-07-19',
+    //     imagePath: 'imagePath'));
+  }
+
+  _asyncFindAll() async {
+    const api = HappinessApiClient();
+    var list = await api.findAll();
+    setState(() {
+      happinessList.addAll(list.reversed);
+    });
   }
 
   @override
@@ -27,37 +43,27 @@ class _HappinessList extends State<HappinessList> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text('적금 내역',
+        title: const Text('My Savings',
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       ),
-      body: Container(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.7,
-                width: MediaQuery.of(context).size.width,
-                // color: Colors.red,
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Card(
-                        child: InkWell(
-                          child: _tile(
-                              Icons.image,
-                              happinessList[index].title!,
-                              happinessList[index].happinessIndex!,
-                              happinessList[index].createdAt!),
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/viewDetail',
-                                arguments: happinessList[index]);
-                          },
-                        )
-                    );
-                  },
-                  itemCount: happinessList.length,
-                ),
-              ),
-            ]),
+      body: ListView.builder(
+        padding: const EdgeInsets.only(bottom: 100),
+        itemBuilder: (context, index) {
+          return Card(
+              child: InkWell(
+                child: _tile(
+                    Icons.image,
+                    happinessList[index].title,
+                    happinessList[index].happinessIndex,
+                    happinessList[index].createdAt.toString().replaceAll('T', ' ')),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/viewDetail',
+                      arguments: happinessList[index]);
+                },
+              )
+          );
+        },
+        itemCount: happinessList.length,
       ),
     );
   }

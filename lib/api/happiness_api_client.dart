@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:html';
 
-import 'package:dio/src/multipart_file.dart';
 import 'package:happiness_savings_client/api/happiness_request.dart';
 import 'package:happiness_savings_client/api/happiness_response.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dio/dio.dart';
 
 class HappinessApiClient {
   const HappinessApiClient();
@@ -30,20 +28,22 @@ class HappinessApiClient {
     String title,
     String content,
     int happinessIndex,
-    MultipartFile imgFile,
+    MultipartFile? imgFile,
   ) async {
     final sharedPreferences = await SharedPreferences.getInstance();
+    // sharedPreferences.setString('userId', 'id1');
     String userId = sharedPreferences.getString('userId')!;
     final happinessRequest =
         HappinessRequest(title, content, happinessIndex, userId, imgFile);
-    var formData = FormData.fromMap(happinessRequest.toMap());
-    return http
-        .post(
-          Uri.http(_host, '/members/$userId/happiness/write'),
-          headers: {'Content-Type': 'multipart/form-data'},
-          body: formData,
-        )
-        .then((value) => json.decode(value.body));
+
+    var multipartRequest = http.MultipartRequest('POST', Uri.http(_host, '/members/$userId/happiness/write'));
+    multipartRequest.fields.addAll(happinessRequest.toStringMap());
+    multipartRequest.files.add(happinessRequest.imgFile!);
+
+    var streamedResponse = await multipartRequest.send();
+    var response = await streamedResponse.stream.bytesToString();
+
+    return int.parse(response);
   }
 
   Future<HappinessResponse> findOne(
@@ -61,7 +61,7 @@ class HappinessApiClient {
     final sharedPreferences = await SharedPreferences.getInstance();
     String userId = sharedPreferences.getString('userId')!;
     return http
-        .get(Uri.http(_host, '/members/$userId/happiness/findOne'))
+        .get(Uri.http(_host, '/members/$userId/happiness/findAll'))
         .then((value) => json.decode(value.body))
         .then((value) =>
             (value as List).map((e) => HappinessResponse.fromJson(e)).toList());

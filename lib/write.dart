@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_savings_client/raindrop/animation_screen.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -313,7 +313,10 @@ class _Write extends State<Write> {
         .showSnackBar(SnackBar(content: Text(happiness.toString())));
 
     const api = HappinessApiClient();
-    MultipartFile imgFile = await MultipartFile.fromFile(_imgPath);
+    MultipartFile? imgFile;
+    if(_imgPath.isNotEmpty){
+      imgFile = await MultipartFile.fromPath('file', _imgPath);
+    }
     final apiResponse = await api.write(_title.text, _content.text, _happinessIndex.toInt(), imgFile);
   }
 }
