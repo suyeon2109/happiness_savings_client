@@ -52,7 +52,7 @@ class _HappinessList extends State<HappinessList> {
           return Card(
               child: InkWell(
                 child: _tile(
-                    Icons.image,
+                    happinessList[index].imageUrl,
                     happinessList[index].title,
                     happinessList[index].happinessIndex,
                     happinessList[index].createdAt.toString().replaceAll('T', ' ')),
@@ -69,7 +69,7 @@ class _HappinessList extends State<HappinessList> {
   }
 
   ListTile _tile(
-          IconData icon, String title, int happinessIndex, String createdAt) =>
+          String icon, String title, int happinessIndex, String createdAt) =>
       ListTile(
         title: Text(
           title,
@@ -79,10 +79,11 @@ class _HappinessList extends State<HappinessList> {
           ),
         ),
         subtitle: Text(happinessIndex.toString()),
-        leading: Icon(
-          icon,
-          color: Colors.blue[500],
-        ),
+        leading: (icon != null)? Image.network(icon) :
+                      Icon(
+                        Icons.image,
+                        color: Colors.blue[500],
+                      ),
         trailing: Text(
           createdAt,
           style: const TextStyle(
