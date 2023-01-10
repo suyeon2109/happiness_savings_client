@@ -125,7 +125,7 @@ class _Home extends State<Home> with TickerProviderStateMixin {
                   : Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 20, 80),
                 child: Visibility(
-                  visible: isVisible,
+                  visible: true,
                   child: FloatingActionButton(
                     heroTag: "view List",
                     backgroundColor: Color(0xFFF1BCB6),
